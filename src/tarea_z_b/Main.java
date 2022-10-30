@@ -9,40 +9,48 @@ package tarea_z_b;
  * @author 
  */
 
-
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
+/**
+ *
+ * @author Ryzen
+ */
 public class Main {
-
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-
-        for (int j = 1; j <= 100; j++) {
-            System.out.println("Caso:" + j);
+        
+        List<String[]> numeros = new ArrayList<>();
+        
+        for (int j = 1; j <= 80; j++) {
+            
 
             Random random = new Random();
-            int n = random.nextInt(20000);
+            int n = random.nextInt(200);
             while (!esParElNumero(n) && n >= 2) {
-                n = random.nextInt(20000);
+                n = random.nextInt(200);
             }
             int arr[] = new int[n];
             int cont = 0;
 
             for (int i = 0; i < arr.length / 2; i++) {
+               
                 arr[i] = generarNumeroAleatorioPar();
                 cont++;
             }
             for (int i = cont; i < arr.length; i++) {
                 arr[i] = generarNumeroAleatorioImpar();
             }
-           generaArchivo(arr,System.getProperty("user.dir")+"\\prueba.csv");
+            
+            generaArchivo(arr,System.getProperty("user.dir")+"\\prueba.csv");
 
         }
 
@@ -78,11 +86,18 @@ public class Main {
 
     static public void generaArchivo(int arr[], String rutaFinal) throws IOException {
         if (arr.length > 0) {
-            //Creacion de archivo Csv.
+            //Creacion de archivo Xlsx.
             try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(rutaFinal), StandardCharsets.ISO_8859_1))) {
+                 
+                for (int j = 0; j < 100; j++) {
+                    
+                    writer.newLine();
+                    writer.write(String.valueOf("caso "+ j));
+                    
                 for (int i = 0; i < arr.length; i++) {
                     writer.newLine();
                     writer.write(String.valueOf(arr[i]));
+                 }
                 }
                 System.out.println("Archivo generado con exito");
             }
@@ -91,4 +106,14 @@ public class Main {
         }
     }
 
+    public static String[] datosAString(int intArray[]) {
+        String strArray[] = new String[intArray.length];
+
+        for (int i = 0; i < intArray.length; i++) {
+            strArray[i] = String.valueOf(intArray[i]);
+        }
+
+        return strArray;
+    }
+    
 }
